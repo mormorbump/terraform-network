@@ -107,7 +107,6 @@ resource "aws_security_group_rule" "db" {
 }
 
 
-
 #############################
 ### セキュリティグループredis
 

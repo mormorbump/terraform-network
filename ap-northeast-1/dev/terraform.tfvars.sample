@@ -1,2 +1,4 @@
-name                 = "app-stg"
-region               = "region"
+name                 = "app-dev"
+region               = "aws-region"
+s3_remote_state_bucket = "bucket_name"
+s3_remote_state_key    = "bucket_path"
