@@ -106,3 +106,25 @@ resource "aws_security_group_rule" "db" {
   security_group_id        = aws_security_group.db.id
 }
 
+
+#############################
+### セキュリティグループredis
+
+resource "aws_security_group" "redis" {
+  name        = "redis_server"
+  description = "It is a security group on redis of vpc."
+  vpc_id      = aws_vpc.vpc.id
+
+  tags = {
+    "Name" = "${var.name}-redis"
+  }
+}
+
+resource "aws_security_group_rule" "redis" {
+  type                     = "ingress"
+  from_port                = 6379
+  to_port                  = 6379
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.app.id
+  security_group_id        = aws_security_group.redis.id
+}

@@ -1,0 +1,21 @@
+
+provider "aws" {
+  shared_credentials_file = "my_credentials_path"
+  profile                 = "my_credentials_profile_name"
+  region                  = "aws_region"
+}
+
+resource "aws_key_pair" "auth" {
+  key_name = var.ssh_key_name
+  public_key = file(var.ssh_public_key_path)
+}
+
+terraform {
+  backend "s3" {
+    shared_credentials_file = "my_credentials_path"
+    profile                 = "my_credentials_profile_name"
+    bucket                  = "backend_s3_bucket_name"
+    key                     = "bucket_dir_path"
+    region                  = "aws_region"
+  }
+}

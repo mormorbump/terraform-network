@@ -88,28 +88,6 @@ resource "aws_subnet" "private_db2" {
   }
 }
 
-resource "aws_subnet" "private_redis1" {
-  vpc_id = aws_vpc.vpc.id
-  cidr_block = "10.0.71.0/24"
-  availability_zone = "ap-northeast-1a"
-  map_public_ip_on_launch = false
-
-  tags = {
-    "Name" = "${var.name}-private-redis1"
-  }
-}
-
-
-resource "aws_subnet" "private_redis2" {
-  vpc_id = aws_vpc.vpc.id
-  cidr_block = "10.0.72.0/24"
-  availability_zone = "ap-northeast-1c"
-  map_public_ip_on_launch = false
-
-  tags = {
-    "Name" = "${var.name}-private-redis2"
-  }
-}
 
 #########################
 #### ルートテーブル #######
@@ -138,6 +116,29 @@ resource "aws_route_table" "private_db2" {
 
   tags = {
     "Name" = "${var.name}-private-1"
+  }
+}
+
+resource "aws_subnet" "private_redis1" {
+  vpc_id = aws_vpc.vpc.id
+  cidr_block = "10.0.71.0/24"
+  availability_zone = "ap-northeast-1a"
+  map_public_ip_on_launch = false
+
+  tags = {
+    "Name" = "${var.name}-private-redis1"
+  }
+}
+
+
+resource "aws_subnet" "private_redis2" {
+  vpc_id = aws_vpc.vpc.id
+  cidr_block = "10.0.72.0/24"
+  availability_zone = "ap-northeast-1c"
+  map_public_ip_on_launch = false
+
+  tags = {
+    "Name" = "${var.name}-private-redis2"
   }
 }
 
@@ -231,27 +232,6 @@ resource "aws_db_subnet_group" "main" {
   }
 }
 
-#############################
-### セキュリティグループredis
-
-resource "aws_security_group" "redis" {
-  name        = "redis_server"
-  description = "It is a security group on redis of vpc."
-  vpc_id      = aws_vpc.vpc.id
-
-  tags = {
-    "Name" = "${var.name}-redis"
-  }
-}
-
-resource "aws_security_group_rule" "redis" {
-  type                     = "ingress"
-  from_port                = 6379
-  to_port                  = 6379
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.app.id
-  security_group_id        = aws_security_group.redis.id
-}
 
 resource "aws_elasticache_subnet_group" "subnet" {
   "name" = "${var.name}-redissubnet"
