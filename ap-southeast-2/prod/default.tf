@@ -1,7 +1,7 @@
 
 # 特にこだわりがなければ、VPCでは/16, subnetでは/24単位にするとわかりやすい。
 resource "aws_vpc" "vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block       = "10.0.0.0/16"
   instance_tenancy = "default"
   # AWSのDNSサーバによる名前解決を有効化
   enable_dns_support = true
@@ -14,14 +14,14 @@ resource "aws_vpc" "vpc" {
 
   # terraform上での削除を保護
   lifecycle {
-    prevent_destroy       = false
+    prevent_destroy = false
   }
 }
 
 # VPCは隔離されたネットワークなので、VPCとインターネットで通信するための入り口であるインターネットゲートウェイを生成。
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.vpc.id
-  
+
   tags = {
     "Name" = "${var.name}-gw"
   }

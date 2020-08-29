@@ -94,7 +94,7 @@ resource "aws_route_table" "redash_rtb" {
 # より、サブネットとルートテーブルを関連付け
 # (関連付けを忘れるとデフォルトルートテーブルが使われてしまい、編集とかができなくなるのでなるべく紐付ける。)
 resource "aws_route_table_association" "redash" {
-  subnet_id = aws_subnet.redash.id
+  subnet_id      = aws_subnet.redash.id
   route_table_id = aws_route_table.redash_rtb.id
 }
 
@@ -130,7 +130,7 @@ resource "aws_route_table" "front_rtb" {
 # より、サブネットとルートテーブルを関連付け
 # (関連付けを忘れるとデフォルトルートテーブルが使われてしまい、編集とかができなくなるのでなるべく紐付ける。)
 resource "aws_route_table_association" "front" {
-  subnet_id = aws_subnet.front.id
+  subnet_id      = aws_subnet.front.id
   route_table_id = aws_route_table.front_rtb.id
 }
 
